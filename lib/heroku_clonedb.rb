@@ -30,9 +30,9 @@ module Heroku::Command
       opts             = parse_database_yml
       database_options = load_database_options(opts)
 
-      dump_name = "data.dump"
+      dump_name = "#{opts[:database]}.dump"
 
-      display "===== Capture Backup...", false
+      display "===== Capture Backup from Heroku...", false
        
       run "heroku pgbackups:capture --expire --app #{app}"
 
@@ -44,7 +44,7 @@ module Heroku::Command
       
       run "dropdb #{opts[:database]} #{database_options}"
 
-      display "===== Createing database #{opts[:database]}...", false
+      display "===== Creating database #{opts[:database]}...", false
       
       run "createdb #{opts[:database]} #{database_options}"
 
