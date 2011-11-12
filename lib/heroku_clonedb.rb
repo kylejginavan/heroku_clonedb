@@ -51,8 +51,10 @@ module Heroku::Command
       display "===== Restoring database #{opts[:database]} with #{dump_name}...", false
       
       shell "pg_restore -d #{opts[:database]} tmp/#{dump_name} -O --verbose --clean --no-acl --no-owner > /dev/null 2>&1"
+      shell "rm -f tmp/#{dump_name}"
       
       display "[OK]"
+            
     end
 
 
