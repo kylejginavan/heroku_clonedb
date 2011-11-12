@@ -32,7 +32,7 @@ module Heroku::Command
 
       dump_name = "#{opts[:database]}.dump"
 
-      display "===== Capture Backup from Heroku...", false
+      display "===== Capture Backup from #{app}...", false
        
       run "heroku pgbackups:capture --expire --app #{app}"
 
