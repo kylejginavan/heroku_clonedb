@@ -10,7 +10,7 @@ After that, a simple
 
 will get you up and running.
 
-If you are using herocutter for install your plugins for heroku, you can do this:
+If you are using HeroCutter for install your plugins for heroku, you can do this:
 
     $ heroku plugins:install git://github.com/hone/heroku_herocutter.git
 
