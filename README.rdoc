@@ -1,0 +1,29 @@
+= Heroku CloneDB Plugin
+
+Use this plugin to properly clone a PostgreSQL database from Heroku to localhost.  The main difference between this plugin and db:pull is that foreign keys and other db constraints are handled properly.
+
+== Installation
+
+After that, a simple
+
+    $ heroku plugins:install git@github.com:chebyte/heroku_clonedb.git
+
+will get you up and running.
+
+== Usage
+
+From your project's root directory:
+
+    $ heroku clonedb
+
+And this is all :)
+
+== Authors:
+
+* Mauro Torres.
+* Kyle J. Ginavan - http://github.com/kylejginavan
+
+== TODO:
+
+Please contact me if there is any enhancements you would like
+to this project.
