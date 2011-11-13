@@ -27,15 +27,17 @@ module Heroku::Command
       database_options = load_database_options(opts)
       dump_name        = "#{opts[:database]}.dump"
       
-      from_app = extract_option("--from") || app
+      from_app = extract_option("--from")
       from_url = extract_option("--from-url")
       to_app   = extract_option("--to")
+      
       
       if from_app.nil? && from_url.nil? && to_app.nil?
         raise(CommandFailed, help)
       end
 
       if from_app && to_app
+        
         has_pgbackups_addon?(from_app)
         has_pgbackups_addon?(to_app)
 
@@ -71,6 +73,7 @@ module Heroku::Command
         display "[OK]"
 
       elsif to_app && from_url
+
         has_pgbackups_addon?(to_app)
 
         display "===== Loading data to #{to_app} app from url...", false

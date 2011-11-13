@@ -24,7 +24,7 @@ From your project's root directory:
 
 For load a data dump from heroku app to localhost:
 
-    $ heroku clonedb [--from app_name]
+    $ heroku clonedb --from app_name
 
 For transfer data from one app to another:
 
