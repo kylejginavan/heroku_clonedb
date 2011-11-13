@@ -22,7 +22,22 @@ and finally
 
 From your project's root directory:
 
-    $ heroku clonedb
+For load a data dump from heroku app to localhost:
+
+    $ heroku clonedb [--from app_name]
+
+For transfer data from one app to another:
+
+    $ heroku clonedb --from app_name1 --to app_name2
+
+For transfer data from url dump to heroku app:
+
+    $ heroku clonedb --from-url 'http://s3.amazonaws.com/.....mydb.dump?authparameters' --to app_name
+
+For get a data dump from heroku app:
+
+    $ heroku clonedb:dump --from app_name [--dir <dir_path>]
+
 
 And this is all :)
 

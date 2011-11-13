@@ -19,6 +19,7 @@ Copyright (c) 2011 Kyle J. Ginavan & Mauro Torres.  AU!!!
 
 
 Heroku::Command::Help.group('CloneDB Command') do |group|
-  group.command('clonedb', 'clone a PostgreSQL database from Heroku to localhost')
+  group.command('clonedb [--from-url <database_url> --to <app_name>] [--from <app_name1> --to <app_name2>] [--from <app_name>]', 'pull the app\'s database into a local database')
+  group.command('clonedb:dump [--dir <path>]', 'make a dump from the heroku database')
 end
 
