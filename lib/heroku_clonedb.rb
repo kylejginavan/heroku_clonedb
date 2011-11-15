@@ -27,7 +27,7 @@ module Heroku::Command
       database_options = load_database_options(opts)
       dump_name        = "#{opts[:database]}.dump"
       
-      from_app = extract_option("--from")
+      from_app = extract_option("--from") || extract_app_in_dir(Dir.pwd)
       from_url = extract_option("--from-url")
       to_app   = extract_option("--to")
       
