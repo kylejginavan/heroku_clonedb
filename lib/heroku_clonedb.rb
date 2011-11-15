@@ -64,6 +64,16 @@ module Heroku::Command
         display "===== Downloading Data Dump...", false
 
         run "curl -o tmp/#{dump_name} `heroku pgbackups:url --app #{from_app}`"
+        
+        if extract_option("--drop")
+          display "===== Deleting database #{opts[:database]}...", false
+
+          run "dropdb #{opts[:database]} #{database_options}"
+
+          display "===== Creating database #{opts[:database]}...", false
+
+          run "createdb #{opts[:database]} #{database_options}"
+        end
 
         display "===== Restoring database #{opts[:database]} with #{dump_name}...", false
       

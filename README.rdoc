@@ -26,6 +26,10 @@ For load a data dump from heroku app to localhost:
 
     $ heroku clonedb --from app_name
 
+If you want before load data dump from heroku, drop and create the db again, you can use:
+
+    $ heroku clonedb --from app_name --drop
+
 For transfer data from one app to another:
 
     $ heroku clonedb --from app_name1 --to app_name2
