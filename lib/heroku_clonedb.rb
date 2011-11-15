@@ -55,7 +55,7 @@ module Heroku::Command
         has_pgbackups_addon?(from_app)
 
         #define vars
-        dump_name        = "#{opts[:database]}-#{Date.today.to_s}.dump"
+        dump_name = "#{opts[:database]}-#{Date.today.to_s}.dump"
 
         shell "heroku pgbackups:capture --expire --app #{from_app}"
 
@@ -142,8 +142,8 @@ module Heroku::Command
       opts = ""
       opts << " -h #{conf[:host]} " if conf[:host]
       opts << " -p #{conf[:port]} " if conf[:port]
-      opts << "-U #{conf[:username]}" if conf[:username]
-      opts << "-w #{conf[:password]}" if conf[:password]      
+      opts << " -U #{conf[:username]} " if conf[:username]
+      opts << " -w #{conf[:password]} " if conf[:password]      
       return opts
     end
 
@@ -186,6 +186,10 @@ For load a data dump from heroku app to localhost:
 
     $ heroku clonedb --from app_name
 
+If you want before load data dump from heroku, drop and create the db again:
+
+    $ heroku clonedb --from app_name --drop
+
 For transfer data from one app to another:
 
     $ heroku clonedb --from app_name1 --to app_name2
@@ -196,7 +200,7 @@ For transfer data from url dump to heroku app:
 
 For get a data dump from heroku app:
 
-    $ heroku clonedb:dump --from app_name [--dir <dir_path>]
+    $ heroku clonedb --dump --from app_name [--dir <dir_path>]
 
 EOF
       help
