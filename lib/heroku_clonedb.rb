@@ -96,7 +96,7 @@ module Heroku::Command
     def dump
       is_root?
 
-      from_app = extract_option("--from")
+      from_app = extract_option("--from") || extract_app_in_dir(Dir.pwd)
 
       raise(CommandFailed, "No --from app specified.\nYou need define --from <app name>") unless from_app
 
