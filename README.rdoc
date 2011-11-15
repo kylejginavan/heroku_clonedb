@@ -40,7 +40,7 @@ For transfer data from url dump to heroku app:
 
 For get a data dump from heroku app:
 
-    $ heroku clonedb:dump --from app_name [--dir <dir_path>]
+    $ heroku clonedb --dump --from app_name [--dir <dir_path>]
 
 
 And this is all :)

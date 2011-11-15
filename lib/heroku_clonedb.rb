@@ -30,6 +30,7 @@ module Heroku::Command
       from_app = extract_option("--from") || extract_app_in_dir(Dir.pwd)
       from_url = extract_option("--from-url")
       to_app   = extract_option("--to")
+      dump     = extract_option("--dump")
       
       
       if from_app.nil? && from_url.nil? && to_app.nil?
@@ -48,6 +49,32 @@ module Heroku::Command
         display "===== Transfering data from #{from_app} to #{to_app}...", false
 
         system "heroku pgbackups:restore DATABASE `heroku pgbackups:url --app #{from_app}` --app #{to_app}"
+
+
+      elsif from_app && dump
+        has_pgbackups_addon?(from_app)
+
+        #define vars
+        dump_name        = "#{opts[:database]}-#{Date.today.to_s}.dump"
+
+        shell "heroku pgbackups:capture --expire --app #{from_app}"
+
+        if dir = extract_option("--dir")
+          run "curl -o #{dir}/#{dump_name} `heroku pgbackups:url --app #{from_app}`"
+          display "You can found the dump in #{dir}/#{dump_name}", false
+        else
+          run "curl -o #{dump_name} `heroku pgbackups:url --app #{from_app}`"
+          display "You can found the dump in #{dump_name}", false
+        end
+        puts ""        
+
+      elsif to_app && from_url
+
+        has_pgbackups_addon?(to_app)
+
+        display "===== Loading data to #{to_app} app from url...", false
+      
+        system "heroku pgbackups:restore DATABASE '#{from_url}' --app #{to_app}"
 
       elsif from_app
 
@@ -81,41 +108,7 @@ module Heroku::Command
         shell "rm -f tmp/#{dump_name}"
       
         display "[OK]"
-
-      elsif to_app && from_url
-
-        has_pgbackups_addon?(to_app)
-
-        display "===== Loading data to #{to_app} app from url...", false
-      
-        system "heroku pgbackups:restore DATABASE '#{from_url}' --app #{to_app}"
-
       end
-    end
-
-    def dump
-      is_root?
-
-      from_app = extract_option("--from") || extract_app_in_dir(Dir.pwd)
-
-      raise(CommandFailed, "No --from app specified.\nYou need define --from <app name>") unless from_app
-
-      has_pgbackups_addon?(from_app)
-
-      #define vars
-      opts             = parse_database_yml
-      dump_name        = "#{opts[:database]}-#{Date.today.to_s}.dump"
-
-      shell "heroku pgbackups:capture --expire --app #{from_app}"
-
-      if dir = extract_option("--dir")
-        run "curl -o #{dir}/#{dump_name} `heroku pgbackups:url --app #{from_app}`"
-        display "The dump is #{dir}/#{dump_name}", false
-      else
-        run "curl -o #{dump_name} `heroku pgbackups:url --app #{from_app}`"
-        display "You can found the dump in #{dump_name}", false
-      end
-      puts ""
     end
 
     private
